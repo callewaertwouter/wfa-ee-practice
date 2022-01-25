@@ -64,8 +64,26 @@ function showSelectedType() {
     hdgHeader.innerHTML = `<h1>You're playing ${selectedType}</h1>`;
 }
 
-function collectQuestions() {
+function filterOnSelectedType() {
     const selectedType = getSelectedType();
 
-    
+    let filterOnType = games.questions.filter(obj => {
+        return obj.round === selectedType
+    });
+
+    return filterOnType;
+}
+
+function collectQuestions() {
+    const filteredType = filterOnSelectedType();
+
+    let listOfQuestions = new Array();
+    let selectedQuestions = new Array();
+    let questionTable = document.createElement('table');
+    questionTable.id = "tblQuestions";
+    questionTable.innerHTML = "";
+
+    listOfQuestions = filteredType.sort(() => 0.5 - Math.random());
+    selectedQuestions = listOfQuestions.slice(0, 5);
+    console.log(selectedQuestions);
 }
