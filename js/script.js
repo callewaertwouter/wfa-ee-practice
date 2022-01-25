@@ -27,18 +27,24 @@ function addEventListeners() {
 
 }
 
+// Global function to extract unique values
 function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
 }
 
 function fillDropDownList() {
-    let tests = new Array();
+    // Create a new array
+    let types = new Array();
     
-    tests = games.questions.map(a => a.round);
-    var unique = tests.filter(onlyUnique);
+    // Extracts all the values from property 'round'
+    types = games.questions.map(a => a.round);
+    // Returns all unique values
+    // Results in 'Jeopardy!' and 'Double Jeopardy!' shown only once
+    var uniqueTypes = types.filter(onlyUnique);
 
-    for (let i = 0; i < unique.length; i++) {
-        const test = unique[i];
-        slcTypes.options.add(new Option(test, test));
+    // Adds these unique values to dropdown list
+    for (let i = 0; i < uniqueTypes.length; i++) {
+        const type = uniqueTypes[i];
+        slcTypes.options.add(new Option(type, type));
     }
 }
