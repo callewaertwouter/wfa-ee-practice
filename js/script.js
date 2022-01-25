@@ -101,18 +101,18 @@ function buildQuestions() {
     createQuestion(selectedQuestions);
 }
 
-function createQuestion(selectedQuestions) {
+function createQuestion(selectedQuestions, index) {
     let divQuestionZone = document.createElement('div');
     divQuestionZone.id = "divZone";
     divQuestionZone.innerHTML = "";
 
-    for (let index = 1; index < selectedQuestions.length; index++) {
+    for (index = currentQuestion; index < selectedQuestions.length; index++) {
         divQuestionZone.innerHTML =
         `
-        <h2 align="center">Question ${index}</h2>
-        <h3 align="center">${selectedQuestions[index].question}</h3>
+        <h2 align="center">Question ${currentQuestion}</h2>
+        <h3 align="center">${selectedQuestions[0].question}</h3>
         <div align="center" class="mark">
-            Stake: ${selectedQuestions[index].value}
+            Stake: ${selectedQuestions[0].value}
         </div>
         <div align="center" class="mark">
             Wins: 
@@ -123,8 +123,6 @@ function createQuestion(selectedQuestions) {
             </button>
         </div>
         `;
-
-        index++;
     }
 
     sctZone.appendChild(divQuestionZone);
