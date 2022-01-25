@@ -5,6 +5,7 @@ window.addEventListener('load', initialize);
 // Elements
 let slcTypes;
 let hdgHeader;
+let btnStart;
 
 // Global variables
 let games;
@@ -23,10 +24,12 @@ function initialize() {
 function bindElements() {
     slcTypes = document.getElementById("jeopardy-type");
     hdgHeader = document.getElementById("jeopardy-type-choice");
+    btnStart = document.getElementById("start");
 }
 
 function addEventListeners() {
     slcTypes.addEventListener("click", showSelectedType);
+    btnStart.addEventListener("click", collectQuestions);
 }
 
 // Global function to extract unique values
@@ -51,8 +54,18 @@ function fillDropDownList() {
     }
 }
 
+function getSelectedType() {
+    return slcTypes[slcTypes.selectedIndex].value;
+}
+
 function showSelectedType() {
-    const selectedType = slcTypes[slcTypes.selectedIndex].value;
+    const selectedType = getSelectedType();
 
     hdgHeader.innerHTML = `<h1>You're playing ${selectedType}</h1>`;
+}
+
+function collectQuestions() {
+    const selectedType = getSelectedType();
+
+    
 }
