@@ -5,7 +5,7 @@ window.addEventListener('load', initialize);
 // Elements
 let slcJeopardy;
 let hdgHeader;
-let btnStart;
+let btnStart, btnValidate;
 let sctOverview, sctZone;
 let currentQuestion;
 
@@ -18,7 +18,7 @@ function initialize() {
 
     games = JSON.parse(dataset);
 
-    currentQuestion = 1;
+    currentQuestion = 0;
 
     fillDropdown();
 }
@@ -101,29 +101,43 @@ function buildQuestions() {
     createQuestion(selectedQuestions);
 }
 
-function createQuestion(selectedQuestions, index) {
+function createQuestion(selectedQuestions) {
     let divQuestionZone = document.createElement('div');
     divQuestionZone.id = "divZone";
     divQuestionZone.innerHTML = "";
 
-    for (index = currentQuestion; index < selectedQuestions.length; index++) {
+    const button = document.createElement('button');
+    button.textContent = "Next Question";
+    button.id = "validate";
+    button.classList.add("questionbutton");
+    button.addEventListener("click", validateAnswerAndShowNextQuestion);
+
+    for (let index = currentQuestion; index < selectedQuestions.length; index++) {
         divQuestionZone.innerHTML =
         `
-        <h2 align="center">Question ${currentQuestion}</h2>
-        <h3 align="center">${selectedQuestions[0].question}</h3>
+        <h2 align="center">Question ${currentQuestion +1}</h2>
+        <h3 align="center">${selectedQuestions[currentQuestion].question}</h3>
         <div align="center" class="mark">
-            Stake: ${selectedQuestions[0].value}
+            Stake: ${selectedQuestions[currentQuestion].value}
         </div>
         <div align="center" class="mark">
             Wins: 
         </div>
-        <div align="center">
-            <button align="center" id="btnValidate" class="questionbutton">
-                Next Question
-            </button>
-        </div>
         `;
+
+        // <div align="center">
+        //     <button align="center" onclick="validateAnswerAndShowNextQuestion()" id="validate" class="questionbutton">
+        //         Next Question
+        //     </button>
+        // </div>
+
+        divQuestionZone.appendChild(button);
     }
 
     sctZone.appendChild(divQuestionZone);
+}
+
+function validateAnswerAndShowNextQuestion() {
+    btnValidate = document.getElementById("validate");
+    currentQuestion++;
 }
