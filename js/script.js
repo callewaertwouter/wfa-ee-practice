@@ -7,7 +7,8 @@ let slcTypes;
 let hdgHeader;
 let btnStart;
 let questionTable;
-let sctOverview;
+let sctOverview, sctZone;
+let currentQuestion;
 
 // Global variables
 let games;
@@ -18,6 +19,7 @@ function initialize() {
     addEventListeners();
 
     games = JSON.parse(dataset);
+    currentQuestion = 0;
 
     fillDropDownList();
 
@@ -28,6 +30,7 @@ function bindElements() {
     hdgHeader = document.getElementById("jeopardy-type-choice");
     btnStart = document.getElementById("start");
     sctOverview = document.getElementById("question-overview");
+    sctZone = document.getElementById("question-zone");
 }
 
 function addEventListeners() {
@@ -115,4 +118,28 @@ function collectQuestions() {
     });
 
     sctOverview.appendChild(questionTable);
+
+    createQuestion(selectedQuestions);
+}
+
+function createQuestion(selectedQuestions) {
+    let divQuestionZone = document.createElement('div');
+    divQuestionZone.id = "divZone";
+    divQuestionZone.innerHTML = "";
+
+    for (let index = currentQuestion; index < selectedQuestions.length; index++) {
+        divQuestionZone.innerHTML =
+        `
+        <h2 align="center">Question ${currentQuestion +1}</h2>
+        <h3 align="center">${selectedQuestions[currentQuestion].question}</h3>
+        <div align="center" class="mark">
+            Stake: ${selectedQuestions[currentQuestion].value}
+        </div>
+        <div align="center" class="mark">
+            Wins: 
+        </div>
+        `;
+    }
+
+    sctZone.appendChild(divQuestionZone);
 }
