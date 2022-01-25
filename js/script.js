@@ -4,6 +4,7 @@ window.addEventListener('load', initialize);
 
 // Elements
 let slcJeopardy;
+let hdgHeader;
 
 // Global variables
 let games;
@@ -19,10 +20,11 @@ function initialize() {
 
 function bindElements() {
     slcJeopardy = document.getElementById("jeopardy-type");
+    hdgHeader = document.getElementById("jeopardy-type-choice");
 }
 
 function addEventListeners() {
-    
+    slcJeopardy.addEventListener("change", showSelection);
 }
 
 function fillDropdown() {
@@ -46,4 +48,10 @@ function fillDropdown() {
     });
     // games.questions returns Object object
     // games.questions.round cannot be read (because its not an array)
+}
+
+function showSelection() {
+    const selection = slcJeopardy[slcJeopardy.selectedIndex].value;
+    
+    hdgHeader.innerHTML = `<h1>You're playing ${selection}</h1>`;
 }
