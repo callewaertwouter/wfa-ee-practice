@@ -5,6 +5,8 @@ window.addEventListener('load', initialize);
 // Elements
 let slcJeopardy;
 let hdgHeader;
+let btnStart;
+let sctOverview;
 
 // Global variables
 let games;
@@ -21,10 +23,13 @@ function initialize() {
 function bindElements() {
     slcJeopardy = document.getElementById("jeopardy-type");
     hdgHeader = document.getElementById("jeopardy-type-choice");
+    btnStart = document.getElementById("start");
+    sctOverview = document.getElementById("question-overview");
 }
 
 function addEventListeners() {
-    slcJeopardy.addEventListener("change", showSelection);
+    slcJeopardy.addEventListener("click", showSelection);
+    btnStart.addEventListener("click", buildQuestions);
 }
 
 function fillDropdown() {
@@ -54,4 +59,36 @@ function showSelection() {
     const selection = slcJeopardy[slcJeopardy.selectedIndex].value;
     
     hdgHeader.innerHTML = `<h1>You're playing ${selection}</h1>`;
+}
+
+function buildQuestions() {
+    let listOfQuestions = new Array();
+    let selectedQuestions = new Array();
+    let questionTable = document.createElement('table');
+
+    listOfQuestions = games.questions.sort(() => 0.5 - Math.random());
+    selectedQuestions = listOfQuestions.slice(0, 5);
+    console.log(selectedQuestions);
+
+    questionTable.innerHTML = 
+            `
+                <tr>
+                    <td><b>Question</b></td>
+                    <td><b>Answer Given</b></td>
+                    <td><b>Answer</b></td>
+                </tr>
+            `;
+            
+    selectedQuestions.forEach(jeoQuestion => {
+        questionTable.innerHTML += 
+        `
+            <tr>
+                <td>${jeoQuestion.question}</td>
+                <td></td>
+                <td>${jeoQuestion.answer}</td>
+            </tr>
+        `;
+    });
+
+    sctOverview.appendChild(questionTable);
 }
