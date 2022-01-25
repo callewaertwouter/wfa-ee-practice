@@ -7,6 +7,7 @@ let slcJeopardy;
 let hdgHeader;
 let btnStart;
 let sctOverview, sctZone;
+let currentQuestion;
 
 // Global variables
 let games;
@@ -16,6 +17,8 @@ function initialize() {
     addEventListeners();
 
     games = JSON.parse(dataset);
+
+    currentQuestion = 1;
 
     fillDropdown();
 }
@@ -63,12 +66,14 @@ function showSelection() {
 }
 
 function buildQuestions() {
-    // let selectedQuestions = new Array();
+    let listOfQuestions = new Array();
+    let selectedQuestions = new Array();
     let questionTable = document.createElement('table');
     questionTable.id = "tblQuestions";
     questionTable.innerHTML = "";
 
-    let selectedQuestions = games.questions.slice(0, 5);
+    listOfQuestions = games.questions.sort(() => 0.5 - Math.random());
+    selectedQuestions = listOfQuestions.slice(0, 5);
     console.log(selectedQuestions);
 
     questionTable.innerHTML = 
