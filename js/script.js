@@ -110,7 +110,6 @@ function createQuestion(selectedQuestions) {
     button.textContent = "Next Question";
     button.id = "validate";
     button.classList.add("questionbutton");
-    button.addEventListener("click", validateAnswerAndShowNextQuestion);
 
     for (let index = currentQuestion; index < selectedQuestions.length; index++) {
         divQuestionZone.innerHTML =
@@ -134,6 +133,7 @@ function createQuestion(selectedQuestions) {
         divQuestionZone.appendChild(button);
     }
 
+    button.addEventListener("click", validateAnswerAndShowNextQuestion);
     sctZone.appendChild(divQuestionZone);
 }
 
