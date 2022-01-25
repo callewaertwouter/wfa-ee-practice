@@ -6,6 +6,8 @@ window.addEventListener('load', initialize);
 let slcTypes;
 let hdgHeader;
 let btnStart;
+let questionTable;
+let sctOverview;
 
 // Global variables
 let games;
@@ -25,11 +27,16 @@ function bindElements() {
     slcTypes = document.getElementById("jeopardy-type");
     hdgHeader = document.getElementById("jeopardy-type-choice");
     btnStart = document.getElementById("start");
+    sctOverview = document.getElementById("question-overview");
 }
 
 function addEventListeners() {
     slcTypes.addEventListener("click", showSelectedType);
     btnStart.addEventListener("click", collectQuestions);
+}
+
+function resetUI() {
+    sctOverview.innerHTML = "";
 }
 
 // Global function to extract unique values
@@ -75,15 +82,37 @@ function filterOnSelectedType() {
 }
 
 function collectQuestions() {
+    resetUI();
+
     const filteredType = filterOnSelectedType();
+
+    questionTable = document.createElement('table');
+    questionTable.id = "tblQuestions";
+    questionTable.innerHTML = 
+        `
+        <tr>
+            <td><b>Questions</b></td>
+            <td><b>Answer Given</b></td>
+            <td><b>Answer</b></td>
+        </tr>
+        `;
 
     let listOfQuestions = new Array();
     let selectedQuestions = new Array();
-    let questionTable = document.createElement('table');
-    questionTable.id = "tblQuestions";
-    questionTable.innerHTML = "";
-
     listOfQuestions = filteredType.sort(() => 0.5 - Math.random());
     selectedQuestions = listOfQuestions.slice(0, 5);
     console.log(selectedQuestions);
+
+    selectedQuestions.forEach(typeQuestion => {
+        questionTable.innerHTML += 
+        `
+        <tr>
+            <td>${typeQuestion.question}</td>
+            <td></td>
+            <td>${typeQuestion.answer}</td>
+        </tr>
+        `;
+    });
+
+    sctOverview.appendChild(questionTable);
 }
