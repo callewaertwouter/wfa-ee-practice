@@ -82,3 +82,13 @@ select {
 .mark {
 	background-color: #FFED00;
 }
+
+div {
+	margin: 10px;
+}
+
+.questionbutton {
+	padding: 10px 200px;
+	border-radius: 5px;
+	border-style: solid;
+}

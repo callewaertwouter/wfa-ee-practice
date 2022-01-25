@@ -6,7 +6,7 @@ window.addEventListener('load', initialize);
 let slcJeopardy;
 let hdgHeader;
 let btnStart;
-let sctOverview;
+let sctOverview, sctZone;
 
 // Global variables
 let games;
@@ -25,6 +25,7 @@ function bindElements() {
     hdgHeader = document.getElementById("jeopardy-type-choice");
     btnStart = document.getElementById("start");
     sctOverview = document.getElementById("question-overview");
+    sctZone = document.getElementById("question-zone");
 }
 
 function addEventListeners() {
@@ -62,12 +63,12 @@ function showSelection() {
 }
 
 function buildQuestions() {
-    let listOfQuestions = new Array();
-    let selectedQuestions = new Array();
+    // let selectedQuestions = new Array();
     let questionTable = document.createElement('table');
+    questionTable.id = "tblQuestions";
+    questionTable.innerHTML = "";
 
-    listOfQuestions = games.questions.sort(() => 0.5 - Math.random());
-    selectedQuestions = listOfQuestions.slice(0, 5);
+    let selectedQuestions = games.questions.slice(0, 5);
     console.log(selectedQuestions);
 
     questionTable.innerHTML = 
@@ -91,4 +92,35 @@ function buildQuestions() {
     });
 
     sctOverview.appendChild(questionTable);
+
+    createQuestion(selectedQuestions);
+}
+
+function createQuestion(selectedQuestions) {
+    let divQuestionZone = document.createElement('div');
+    divQuestionZone.id = "divZone";
+    divQuestionZone.innerHTML = "";
+
+    for (let index = 1; index < selectedQuestions.length; index++) {
+        divQuestionZone.innerHTML =
+        `
+        <h2 align="center">Question ${index}</h2>
+        <h3 align="center">${selectedQuestions[index].question}</h3>
+        <div align="center" class="mark">
+            Stake: ${selectedQuestions[index].value}
+        </div>
+        <div align="center" class="mark">
+            Wins: 
+        </div>
+        <div align="center">
+            <button align="center" id="btnValidate" class="questionbutton">
+                Next Question
+            </button>
+        </div>
+        `;
+
+        index++;
+    }
+
+    sctZone.appendChild(divQuestionZone);
 }
